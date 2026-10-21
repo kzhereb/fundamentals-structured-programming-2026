@@ -68,6 +68,20 @@ double calculate_inverse_integral(double a, double b) {
 
 }
 
+double calculate_integral(double a, double b) {
+    assert(a<b);
+    //double dx = 1e-5;
+    int N = 1e5;
+    double dx = (b-a)/N;
+    double result = 0.0;
+    for(double x = a; x <= b; x+= dx) {
+        result +=  (f(x+dx) + f(x)) / 2 * dx;
+    }
+    return result;
+
+}
+
+
 int main() {
     double a;
     double b;
@@ -85,7 +99,13 @@ int main() {
 
     if (has_inverse(a,b)) {
         double result = calculate_inverse_integral(a,b);
-        std::cout<<"Value of integral: "<<result<<std::endl;
+        std::cout<<"Value of inverse integral: "<<result<<std::endl;
+        double initial = calculate_integral(a,b);
+        std::cout<<"Value of initial integral: "<<initial<<std::endl;
+        std::cout<<"Sum of integrals: "<<initial+result<<std::endl;
+        double predicted_sum = b*f(b)-a*f(a);
+        std::cout<<"Predicted sum: "<<predicted_sum<<std::endl;
+        
     } else {
         std::cout<<"No inverse function on (a,b)"<<std::endl;
     }
